@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AnimalApi.Models;
 
+using Microsoft.AspNetCore.Authorization;
+
+
 namespace AnimalApi.Controllers.V1
 {
   // [Route("api/[controller]")]
@@ -86,6 +89,7 @@ namespace AnimalApi.Controllers.V1
       return CreatedAtAction(nameof(GetAnimal), new { id = animal.AnimalId }, animal);
     }
 
+    [Authorize]
     // PUT: api/v1/Animals/5
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Animal animal)
@@ -121,6 +125,7 @@ namespace AnimalApi.Controllers.V1
       return _db.Animals.Any(e => e.AnimalId == id);
     }
 
+    [Authorize]
     // DELETE: api/v1/Animals/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAnimal(int id)

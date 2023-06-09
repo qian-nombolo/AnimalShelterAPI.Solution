@@ -1,9 +1,14 @@
 using AnimalApi.Models;
 using Microsoft.EntityFrameworkCore;
-
 // for version
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+// for auththorization
+using AnimalApiCall.Keys;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 // for cors
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -16,7 +21,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
       policy  =>
       {
-        policy.WithOrigins("http://localhost:5000", "http://localhost:5001");
+        policy.WithOrigins("http://localhost:5000/api/animals", "http://localhost:5001/api/animals");
       });
   });
 
@@ -52,6 +57,29 @@ builder.Services.AddVersionedApiExplorer(setup =>
 });
 
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+
+// Add Authentication services for JWT tokens 
+builder.Services.AddAuthentication(options =>
+{
+  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+}).AddJwtBearer(options =>
+{
+  options.SaveToken = true;
+  options.RequireHttpsMetadata = false;
+  options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+    {
+      ValidateIssuer = true,
+      ValidateAudience = true,
+      ValidAudience = "http://localhost:5000/api/animals",
+      ValidIssuer = "http://localhost:5000/api/animals",
+      ClockSkew = TimeSpan.Zero,// It forces tokens to expire exactly at token expiration time instead of 5 minutes later
+      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(EnvironmentVariables.ApiKey))
+    };
+    
+});
+
 
 var app = builder.Build();
 
