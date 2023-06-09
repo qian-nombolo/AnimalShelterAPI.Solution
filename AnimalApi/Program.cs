@@ -21,7 +21,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
       policy  =>
       {
-        policy.WithOrigins("http://localhost:5000/api/animals", "http://localhost:5001/api/animals");
+        policy.WithOrigins("http://localhost:5000/api/animals", "http://localhost:5001/api/animals")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithExposedHeaders("Custom-Header");
       });
   });
 
@@ -80,7 +83,6 @@ builder.Services.AddAuthentication(options =>
     
 });
 
-
 var app = builder.Build();
 
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
@@ -103,9 +105,9 @@ else
 }
 
 // for cors
-app.UseStaticFiles();
 app.UseRouting();
 app.UseCors(MyAllowSpecificOrigins);
+// app.UseStaticFiles();
 
 app.UseAuthorization();
 
