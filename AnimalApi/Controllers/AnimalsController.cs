@@ -18,7 +18,7 @@ namespace AnimalApi.Controllers
 
     // GET: api/animals
     [HttpGet]
-    public async Task<List<Animal>> Get(string species, string name, int minimumAge)
+    public async Task<IActionResult> Get(string species, string name, int minimumAge, int? page)
     {
       IQueryable<Animal> query = _db.Animals.AsQueryable();
 
@@ -37,7 +37,27 @@ namespace AnimalApi.Controllers
         query = query.Where(entry => entry.Age >= minimumAge);
       }
 
-      return await query.ToListAsync();
+      int pageCount = query.Count();
+      int pageSize = 3;
+      int currentPage = page ?? 1;
+
+      var animals = await query
+        .Skip((currentPage - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+      var response = new AnimalResponse
+      {
+        Animals = animals,
+        //page number inside the url
+        CurrentPage = currentPage,
+        //the amount of animals returned from the database
+        PageItems  = pageCount,
+        //amount of items on the page
+        PageSize = pageSize         
+      };
+
+      return Ok(response);  
     }
 
     // GET: api/Animals/5
@@ -114,13 +134,6 @@ namespace AnimalApi.Controllers
 
       return NoContent();
     }
-
-
-
-
-
-
-
 
 
   }
