@@ -77,7 +77,8 @@ namespace AnimalApi.Controllers.V1
 
       return animal;
     }
-
+    
+    [Authorize]
     // POST api/v1/animals
     [HttpPost]
     public async Task<ActionResult<Animal>> Post([FromBody] Animal animal)

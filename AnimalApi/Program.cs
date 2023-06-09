@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-
 // for cors
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
