@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AnimalApi.Models;
 
-namespace AnimalApi.Controllers
+namespace AnimalApi.Controllers.V1
 {
-  [Route("api/[controller]")]
+  // [Route("api/[controller]")]
   [ApiController]
+  [Route("api/v{version:apiVersion}/[controller]")]
+  [ApiVersion("1.0")]
 
   public class AnimalsController : ControllerBase
   {
@@ -16,7 +18,7 @@ namespace AnimalApi.Controllers
       _db = db;
     }
 
-    // GET: api/animals
+    // GET: api/v1/animals
     [HttpGet]
     public async Task<IActionResult> Get(string species, string name, int minimumAge, int? page)
     {
@@ -60,7 +62,7 @@ namespace AnimalApi.Controllers
       return Ok(response);  
     }
 
-    // GET: api/Animals/5
+    // GET: api/v1/Animals/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Animal>> GetAnimal(int id)
     {
@@ -74,7 +76,7 @@ namespace AnimalApi.Controllers
       return animal;
     }
 
-    // POST api/animals
+    // POST api/v1/animals
     [HttpPost]
     public async Task<ActionResult<Animal>> Post([FromBody] Animal animal)
     {
@@ -84,7 +86,7 @@ namespace AnimalApi.Controllers
       return CreatedAtAction(nameof(GetAnimal), new { id = animal.AnimalId }, animal);
     }
 
-    // PUT: api/Animals/5
+    // PUT: api/v1/Animals/5
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Animal animal)
     {
@@ -119,7 +121,7 @@ namespace AnimalApi.Controllers
       return _db.Animals.Any(e => e.AnimalId == id);
     }
 
-    // DELETE: api/Animals/5
+    // DELETE: api/v1/Animals/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAnimal(int id)
     {
