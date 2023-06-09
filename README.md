@@ -72,8 +72,8 @@ namespace AnimalApiCall.Keys
 ```
 
 7. Create the database using the migrations in the AnimalApi project. Open your shell (e.g., Terminal or GitBash) to the production directory "AnimalApi", and run `dotnet ef database update`.  
-7. To build out this project in development mode, start the project with `dotnet watch run` in the production directory "AnimalApi".
-8. Use your program of choice to make API calls. In your API calls, use the domain _http://localhost:5000_. Keep reading to learn about all of the available endpoints.
+8. To build out this project in development mode, start the project with `dotnet watch run` in the production directory "AnimalApi".
+9. Use your program of choice to make API calls. In your API calls, use the domain _http://localhost:5000_. Keep reading to learn about all of the available endpoints.
 
 ## Testing the API Endpoints
 
@@ -172,7 +172,8 @@ Notice that the value of `animalId` needs to match the id number in the URL. In 
 
 ## Known Bugs
 
-No bugs 
+* For API V1, by providing the correct authentication token in the request headers, the server's authentication middleware are not able to validate the token and authorize the request.
+* For API V2, "Enable CORS with attributes" in GET animals: CORS headers are not being added to the response.
 
 ## License
 [MIT](license.txt)

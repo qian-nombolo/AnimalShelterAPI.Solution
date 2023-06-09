@@ -9,15 +9,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-// for cors
-var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add cors
 builder.Services.AddCors(options =>
   {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy("Policy", 
       policy  =>
       {
         policy.WithOrigins("http://localhost:5000/api/animals", "http://localhost:5001/api/animals")
@@ -52,6 +49,7 @@ builder.Services.AddApiVersioning(opt =>
 
   });
 
+// Add apiExplorer to discover versions
 builder.Services.AddVersionedApiExplorer(setup =>
 {
   setup.GroupNameFormat = "'v'VVV";
@@ -104,9 +102,9 @@ else
 }
 
 // for cors
+app.UseStaticFiles();
 app.UseRouting();
-app.UseCors(MyAllowSpecificOrigins);
-// app.UseStaticFiles();
+app.UseCors();
 
 app.UseAuthorization();
 

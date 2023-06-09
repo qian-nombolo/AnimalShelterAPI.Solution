@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AnimalApi.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace AnimalApi.Controllers.V2
 {
@@ -19,6 +20,7 @@ namespace AnimalApi.Controllers.V2
     }
 
     // GET: api/v2/animals
+    [EnableCors("Policy")]
     [HttpGet]
     public async Task<IActionResult> Get(string species, string name, int minimumAge, int? page)
     {
@@ -63,6 +65,7 @@ namespace AnimalApi.Controllers.V2
     }
 
     // GET: api/v2/Animals/5
+    [EnableCors("Policy")]
     [HttpGet("{id}")]
     public async Task<ActionResult<Animal>> GetAnimal(int id)
     {
