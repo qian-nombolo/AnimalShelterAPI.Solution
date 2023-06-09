@@ -137,7 +137,7 @@ namespace AnimalApi.Controllers.V2
       return NoContent();
     }
 
-    // GET: api/v2/travels/random
+    // GET: api/v2/animals/random
     [HttpGet("random")]
     public async Task<ActionResult<Animal>> GetRandomAnimal()
     {

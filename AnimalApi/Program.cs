@@ -1,12 +1,24 @@
 using AnimalApi.Models;
 using Microsoft.EntityFrameworkCore;
 
+// for version
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
-
+// for cors
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add cors
+builder.Services.AddCors(options =>
+  {
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+      policy  =>
+      {
+        policy.WithOrigins("http://localhost:5000", "http://localhost:5001");
+      });
+  });
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -19,7 +31,6 @@ builder.Services.AddDbContext<AnimalApiContext>(
                     )
                   )
                 );
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,6 +51,7 @@ builder.Services.AddVersionedApiExplorer(setup =>
   setup.SubstituteApiVersionInUrl = true;
 });
 
+builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 var app = builder.Build();
 
@@ -49,14 +61,23 @@ var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionD
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => 
+    {
+      foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions.Reverse())
+      {
+        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+      }
+    });
 }
 else 
 {
   app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
+// for cors
+app.UseStaticFiles();
+app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
