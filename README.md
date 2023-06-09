@@ -2,7 +2,7 @@
 
 #### By _Qian Li_ 😊
 
-#### This is my c# and .NET project which builds an API with two versions that allows users to GET,POST, PUT and Delete cats and dogs in a animal shelter.
+#### This is my c# and .NET project which builds an API with two versions V1 and V2: V1 allows authorized users to GET,POST, PUT and Delete cats and dogs, V2 allow all users to use data in this animal shelter.
 
 ## Technologies Used
 
@@ -11,7 +11,6 @@
 * dotnet script(.NET 6.0 CLI)
 * .NET
 * Swagger
-* RestSharp
 * Entity Framework Core
 * JSON Web Token Authentication
 * MySQL Workbench
