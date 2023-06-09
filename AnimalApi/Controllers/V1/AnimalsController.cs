@@ -4,7 +4,6 @@ using AnimalApi.Models;
 
 using Microsoft.AspNetCore.Authorization;
 
-
 namespace AnimalApi.Controllers.V1
 {
   // [Route("api/[controller]")]
