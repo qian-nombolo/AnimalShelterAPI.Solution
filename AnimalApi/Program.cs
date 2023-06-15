@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 // for auththorization
-using AnimalApiCall.Keys;
+// using AnimalApiCall.Keys;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -75,7 +75,7 @@ builder.Services.AddAuthentication(options =>
       ValidAudience = "http://localhost:5000/api/animals",
       ValidIssuer = "http://localhost:5000/api/animals",
       ClockSkew = TimeSpan.Zero,// It forces tokens to expire exactly at token expiration time instead of 5 minutes later
-      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(EnvironmentVariables.ApiKey))
+      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("APIKEYFORTEST"))
     };
     
 });
