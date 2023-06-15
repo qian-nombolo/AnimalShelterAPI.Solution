@@ -2,7 +2,7 @@
 
 #### By _Qian Li_ 😊
 
-#### This is my c# and .NET project which builds an API with two versions V1 and V2: V1 allows authorized users to GET,POST, PUT and Delete cats and dogs, V2 allow all users to use data in this animal shelter.
+#### This is my c# and .NET project which builds an API with two versions V1 and V2 that allows all users to use data in this animal shelter.
 
 ## Technologies Used
 
@@ -20,14 +20,14 @@
 
 * A user should be able to GET and POST animals, search animals by `species` , `name`, `age` in different `page` by optionally setting the parameters.
 * A user should be able to use V1 and V2 version of AnimalApi.
-* In API version v1, only authorized user is able to PUT and DELETE reviews; In API version v2, all users are able to PUT and DELETE reviews.
+* All users are able to Get, PUT and DELETE animals.
 * In API version V2, a user should be able to look up random cute animals just for fun.
 
 ### Set Up and Run Project
 
 1. Clone this repo.
 2. Open the terminal and navigate to this project's production directory called "AnimalApi".
-3. Within the production directory "AnimalApi", create two three files: `appsettings.json`,  `appsettings.Development.json`, and `EnvironmentVariables.cs`.
+3. Within the production directory "AnimalApi", create two three files: `appsettings.json`,  `appsettings.Development.json`.
 4. Within `appsettings.json`, put in the following code. Make sure to replace the `uid` and `pwd` values in the MySQL database connection string with your own username and password for MySQL.
 
 ```json
@@ -59,20 +59,10 @@
   }
 }
 ```
-6. Within `EnvironmentVariables.cs`, add the following code:
-```
-namespace AnimalApiCall.Keys
-{
-  public static class EnvironmentVariables
-  {
-    public static string ApiKey = [YOUR-API-KEY-VALUE];
-  }
-}
-```
 
-7. Create the database using the migrations in the AnimalApi project. Open your shell (e.g., Terminal or GitBash) to the production directory "AnimalApi", and run `dotnet ef database update`.  
-8. To build out this project in development mode, start the project with `dotnet watch run` in the production directory "AnimalApi".
-9. Use your program of choice to make API calls. In your API calls, use the domain _http://localhost:5000_. Keep reading to learn about all of the available endpoints.
+6. Create the database using the migrations in the AnimalApi project. Open your shell (e.g., Terminal or GitBash) to the production directory "AnimalApi", and run `dotnet ef database update`.  
+7. To build out this project in development mode, start the project with `dotnet watch run` in the production directory "AnimalApi".
+8. Use your program of choice to make API calls. In your API calls, use the domain _http://localhost:5000_. Keep reading to learn about all of the available endpoints.
 
 ## Testing the API Endpoints
 
@@ -171,7 +161,6 @@ Notice that the value of `animalId` needs to match the id number in the URL. In 
 
 ## Known Bugs
 
-* For API V1, by providing the correct authentication token in the request headers, the server's authentication middleware are not able to validate the token and authorize the request.
 * For API V2, "Enable CORS with attributes" in GET animals: CORS headers are not being added to the response.
 
 ## License
