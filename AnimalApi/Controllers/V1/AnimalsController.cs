@@ -78,7 +78,7 @@ namespace AnimalApi.Controllers.V1
       return animal;
     }
     
-    // [Authorize]
+    [Authorize]
     // POST api/v1/animals
     [HttpPost]
     public async Task<ActionResult<Animal>> Post([FromBody] Animal animal)
@@ -89,7 +89,7 @@ namespace AnimalApi.Controllers.V1
       return CreatedAtAction(nameof(GetAnimal), new { id = animal.AnimalId }, animal);
     }
 
-    // [Authorize]
+    [Authorize]
     // PUT: api/v1/Animals/5
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Animal animal)
@@ -125,7 +125,7 @@ namespace AnimalApi.Controllers.V1
       return _db.Animals.Any(e => e.AnimalId == id);
     }
 
-    // [Authorize]
+    [Authorize]
     // DELETE: api/v1/Animals/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAnimal(int id)

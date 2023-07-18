@@ -11,18 +11,23 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add cors
-builder.Services.AddCors(options =>
-  {
-    options.AddPolicy("Policy", 
-      policy  =>
-      {
-        policy.WithOrigins("http://localhost:5000/api/animals", "http://localhost:5001/api/animals")
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .WithExposedHeaders("Custom-Header");
-      });
-  });
+// add cors
+builder.Services.AddCors(c=> {
+  c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
+//  Add cors(not working)
+// builder.Services.AddCors(options =>
+//   {
+//     options.AddPolicy("Policy", 
+//       policy  =>
+//       {
+//         policy.WithOrigins("http://localhost:5000/api/animals", "http://localhost:5001/api/animals")
+//         .AllowAnyHeader()
+//         .AllowAnyMethod()
+//         .WithExposedHeaders("Custom-Header");
+//       });
+//   });
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -101,10 +106,13 @@ else
   app.UseHttpsRedirection();
 }
 
-// for cors
-app.UseStaticFiles();
-app.UseRouting();
-app.UseCors();
+// allow cors
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+// for cors(not working)
+// app.UseStaticFiles();
+// app.UseRouting();
+// app.UseCors();
 
 app.UseAuthorization();
 
